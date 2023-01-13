@@ -1,9 +1,22 @@
 const express = require('express');
+const dotenv = require("dotenv");
+const db = require('./model/connect');
+
 const app = express();
-const port = process.env.PORT || 3000;
+dotenv.config();
+const port = process.env.PORT || 3001;
 
 app.use('/', require('./routes'))
 
-app.listen(port, () => {
-    console.log(`Running on port ${port}`)
-})
+const start = async () =>{
+    const connected = await db.connect();    
+    app.listen(port, () => {
+        if (connected) {
+            console.log(`Running on port ${port}`);
+        } else {
+            console.log(`error - not connected`);
+        }
+    })
+}
+start();
+
