@@ -7,5 +7,5 @@ const getAll = async (req, res, next) => {
     const records = await cursor.toArray();
     res.status(200).json(records);
   };
-  
+
   module.exports = { getAll };
